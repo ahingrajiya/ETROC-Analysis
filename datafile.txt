@@ -1,0 +1,8 @@
+/home/abhi/etroc_analysis/ETROC2/data/Run_25/loop_0/TDC_Data_translated_0.nem
+/home/abhi/etroc_analysis/ETROC2/data/Run_25/loop_0/TDC_Data_translated_1.nem
+/home/abhi/etroc_analysis/ETROC2/data/Run_25/loop_0/TDC_Data_translated_2.nem
+/home/abhi/etroc_analysis/ETROC2/data/Run_25/loop_0/TDC_Data_translated_3.nem
+/home/abhi/etroc_analysis/ETROC2/data/Run_25/loop_0/TDC_Data_translated_4.nem
+/home/abhi/etroc_analysis/ETROC2/data/Run_25/loop_0/TDC_Data_translated_5.nem
+/home/abhi/etroc_analysis/ETROC2/data/Run_25/loop_0/TDC_Data_translated_6.nem
+/home/abhi/etroc_analysis/ETROC2/data/Run_25/loop_0/TDC_Data_translated_7.nem
