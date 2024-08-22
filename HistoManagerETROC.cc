@@ -738,10 +738,7 @@ void HistoManagerETROC::writeOutput()
         hDTOACode_C1[i]->Write();
         hDTOACode_C2[i]->Write();
 
-        (TBrowser *)0x57ef2eeb8f70
-
-            hDTOACode_TWC_C0[i]
-                ->Write();
+        hDTOACode_TWC_C0[i]->Write();
         hDTOACode_TWC_C1[i]->Write();
         hDTOACode_TWC_C2[i]->Write();
 
