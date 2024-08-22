@@ -528,153 +528,108 @@ void HistoManagerETROC::projection()
     for (int i = 0; i < fNBoards; i++)
     {
         hTOACode_C0[i] = hTOACodevsTOTCode_C0[i]->ProjectionY(Form("hTOACode_C0_B%d", i));
-        hTOACode_C0[i]->Sumw2();
         hTOACode_C0[i]->SetTitle(Form("TOACode C0 For Board %d;TOACode%d", i, i));
         hTOACode_C1[i] = hTOACodevsTOTCode_C1[i]->ProjectionY(Form("hTOACode_C1_B%d", i));
-        hTOACode_C1[i]->Sumw2();
         hTOACode_C1[i]->SetTitle(Form("TOACode C1 For Board %d;TOACode%d", i, i));
         hTOACode_C2[i] = hTOACodevsTOTCode_C2[i]->ProjectionY(Form("hTOACode_C2_B%d", i));
-        hTOACode_C2[i]->Sumw2();
         hTOACode_C2[i]->SetTitle(Form("TOACode C2 For Board %d;TOACode%d", i, i));
 
         hTOACode_TWC_C0[i] = hTOACode_TWCvsTOTCode_C0[i]->ProjectionY(Form("hTOACode_TWC_C0_B%d", i));
-        hTOACode_TWC_C0[i]->Sumw2();
         hTOACode_TWC_C0[i]->SetTitle(Form("TOACode TWC C0 For Board %d;TOACode%d", i, i));
         hTOACode_TWC_C1[i] = hTOACode_TWCvsTOTCode_C1[i]->ProjectionY(Form("hTOACode_TWC_C1_B%d", i));
-        hTOACode_TWC_C1[i]->Sumw2();
         hTOACode_TWC_C1[i]->SetTitle(Form("TOACode TWC C1 For Board %d;TOACode%d", i, i));
         hTOACode_TWC_C2[i] = hTOACode_TWCvsTOTCode_C2[i]->ProjectionY(Form("hTOACode_TWC_C2_B%d", i));
-        hTOACode_TWC_C2[i]->Sumw2();
         hTOACode_TWC_C2[i]->SetTitle(Form("TOACode TWC C2 For Board %d;TOACode%d", i, i));
 
         hDTOACode_C0[i] = hDTOACodevsTOTCode_C0[i]->ProjectionY(Form("hDTOACode_C0_B%d", i));
-        hDTOACode_C0[i]->Sumw2();
         hDTOACode_C0[i]->SetTitle(Form("#DeltaTOACode C0 For Board %d;#DeltaTOACode%d", i, i));
         hDTOACode_C1[i] = hDTOACodevsTOTCode_C1[i]->ProjectionY(Form("hDTOACode_C1_B%d", i));
-        hDTOACode_C1[i]->Sumw2();
         hDTOACode_C1[i]->SetTitle(Form("#DeltaTOACode C1 For Board %d;#DeltaTOACode%d", i, i));
         hDTOACode_C2[i] = hDTOACodevsTOTCode_C2[i]->ProjectionY(Form("hDTOACode_C2_B%d", i));
-        hDTOACode_C2[i]->Sumw2();
         hDTOACode_C2[i]->SetTitle(Form("#DeltaTOACode C2 For Board %d;#DeltaTOACode%d", i, i));
 
         hDTOACode_TWC_C0[i] = hDTOACode_TWCvsTOTCode_C0[i]->ProjectionY(Form("hDTOACode_TWC_C0_B%d", i));
-        hDTOACode_TWC_C0[i]->Sumw2();
         hDTOACode_TWC_C0[i]->SetTitle(Form("#DeltaTOACode TWC C0 For Board %d;#DeltaTOACode%d", i, i));
         hDTOACode_TWC_C1[i] = hDTOACode_TWCvsTOTCode_C1[i]->ProjectionY(Form("hDTOACode_TWC_C1_B%d", i));
-        hDTOACode_TWC_C1[i]->Sumw2();
         hDTOACode_TWC_C1[i]->SetTitle(Form("#DeltaTOACode TWC C1 For Board %d;#DeltaTOACode%d", i, i));
         hDTOACode_TWC_C2[i] = hDTOACode_TWCvsTOTCode_C2[i]->ProjectionY(Form("hDTOACode_TWC_C2_B%d", i));
-        hDTOACode_TWC_C2[i]->Sumw2();
         hDTOACode_TWC_C2[i]->SetTitle(Form("#DeltaTOACode TWC C2 For Board %d;#DeltaTOACode%d", i, i));
 
         hDTOACode_TWC0_C0[i] = hDTOACode_TWC0vsTOTCode_C0[i]->ProjectionY(Form("hDTOACode_TWC0_C0_B%d", i));
-        hDTOACode_TWC0_C0[i]->Sumw2();
         hDTOACode_TWC0_C0[i]->SetTitle(Form("#DeltaTOACode TWC0 C0 For Board %d;#DeltaTOACode%d", i, i));
         hDTOACode_TWC0_C1[i] = hDTOACode_TWC0vsTOTCode_C1[i]->ProjectionY(Form("hDTOACode_TWC0_C1_B%d", i));
-        hDTOACode_TWC0_C1[i]->Sumw2();
         hDTOACode_TWC0_C1[i]->SetTitle(Form("#DeltaTOACode TWC0 C1 For Board %d;#DeltaTOACode%d", i, i));
         hDTOACode_TWC0_C2[i] = hDTOACode_TWC0vsTOTCode_C2[i]->ProjectionY(Form("hDTOACode_TWC0_C2_B%d", i));
-        hDTOACode_TWC0_C2[i]->Sumw2();
         hDTOACode_TWC0_C2[i]->SetTitle(Form("#DeltaTOACode TWC0 C2 For Board %d;#DeltaTOACode%d", i, i));
 
         hDTOACode_TWC1_C0[i] = hDTOACode_TWC1vsTOTCode_C0[i]->ProjectionY(Form("hDTOACode_TWC1_C0_B%d", i));
-        hDTOACode_TWC1_C0[i]->Sumw2();
         hDTOACode_TWC1_C0[i]->SetTitle(Form("#DeltaTOACode TWC1 C0 For Board %d;#DeltaTOACode%d", i, i));
         hDTOACode_TWC1_C1[i] = hDTOACode_TWC1vsTOTCode_C1[i]->ProjectionY(Form("hDTOACode_TWC1_C1_B%d", i));
-        hDTOACode_TWC1_C1[i]->Sumw2();
         hDTOACode_TWC1_C1[i]->SetTitle(Form("#DeltaTOACode TWC1 C1 For Board %d;#DeltaTOACode%d", i, i));
         hDTOACode_TWC1_C2[i] = hDTOACode_TWC1vsTOTCode_C2[i]->ProjectionY(Form("hDTOACode_TWC1_C2_B%d", i));
-        hDTOACode_TWC1_C2[i]->Sumw2();
         hDTOACode_TWC1_C2[i]->SetTitle(Form("#DeltaTOACode TWC1 C2 For Board %d;#DeltaTOACode%d", i, i));
 
         hTOA_C0[i] = hTOAvsTOT_C0[i]->ProjectionY(Form("hTOA_C0_B%d", i));
-        hTOA_C0[i]->Sumw2();
         hTOA_C0[i]->SetTitle(Form("TOA C0 For Board %d;TOA%d", i, i));
         hTOA_C1[i] = hTOAvsTOT_C1[i]->ProjectionY(Form("hTOA_C1_B%d", i));
-        hTOA_C1[i]->Sumw2();
         hTOA_C1[i]->SetTitle(Form("TOA C1 For Board %d;TOA%d", i, i));
         hTOA_C2[i] = hTOAvsTOT_C2[i]->ProjectionY(Form("hTOA_C2_B%d", i));
-        hTOA_C2[i]->Sumw2();
         hTOA_C2[i]->SetTitle(Form("TOA C2 For Board %d;TOA%d", i, i));
 
         hTOA_TWC_C0[i] = hTOA_TWCvsTOT_C0[i]->ProjectionY(Form("hTOA_TWC_C0_B%d", i));
-        hTOA_TWC_C0[i]->Sumw2();
         hTOA_TWC_C0[i]->SetTitle(Form("TOA TWC C0 For Board %d;TOA%d", i, i));
         hTOA_TWC_C1[i] = hTOA_TWCvsTOT_C1[i]->ProjectionY(Form("hTOA_TWC_C1_B%d", i));
-        hTOA_TWC_C1[i]->Sumw2();
         hTOA_TWC_C1[i]->SetTitle(Form("TOA TWC C1 For Board %d;TOA%d", i, i));
         hTOA_TWC_C2[i] = hTOA_TWCvsTOT_C2[i]->ProjectionY(Form("hTOA_TWC_C2_B%d", i));
-        hTOA_TWC_C2[i]->Sumw2();
         hTOA_TWC_C2[i]->SetTitle(Form("TOA TWC C2 For Board %d;TOA%d", i, i));
 
         hDTOA_C0[i] = hDTOAvsTOT_C0[i]->ProjectionY(Form("hDTOA_C0_B%d", i));
-        hDTOA_C0[i]->Sumw2();
         hDTOA_C0[i]->SetTitle(Form("#DeltaTOA C0 For Board %d;#DeltaTOA%d", i, i));
         hDTOA_C1[i] = hDTOAvsTOT_C1[i]->ProjectionY(Form("hDTOA_C1_B%d", i));
-        hDTOA_C1[i]->Sumw2();
         hDTOA_C1[i]->SetTitle(Form("#DeltaTOA C1 For Board %d;#DeltaTOA%d", i, i));
         hDTOA_C2[i] = hDTOAvsTOT_C2[i]->ProjectionY(Form("hDTOA_C2_B%d", i));
-        hDTOA_C2[i]->Sumw2();
         hDTOA_C2[i]->SetTitle(Form("#DeltaTOA C2 For Board %d;#DeltaTOA%d", i, i));
 
         hDTOA_TWC_C0[i] = hDTOA_TWCvsTOT_C0[i]->ProjectionY(Form("hDTOA_TWC_C0_B%d", i));
-        hDTOA_TWC_C0[i]->Sumw2();
         hDTOA_TWC_C0[i]->SetTitle(Form("#DeltaTOA TWC C0 For Board %d;#DeltaTOA%d", i, i));
         hDTOA_TWC_C1[i] = hDTOA_TWCvsTOT_C1[i]->ProjectionY(Form("hDTOA_TWC_C1_B%d", i));
-        hDTOA_TWC_C1[i]->Sumw2();
         hDTOA_TWC_C1[i]->SetTitle(Form("#DeltaTOA TWC C1 For Board %d;#DeltaTOA%d", i, i));
         hDTOA_TWC_C2[i] = hDTOA_TWCvsTOT_C2[i]->ProjectionY(Form("hDTOA_TWC_C2_B%d", i));
-        hDTOA_TWC_C2[i]->Sumw2();
         hDTOA_TWC_C2[i]->SetTitle(Form("#DeltaTOA TWC C2 For Board %d;#DeltaTOA%d", i, i));
 
         hDTOA_TWC0_C0[i] = hDTOA_TWC0vsTOT_C0[i]->ProjectionY(Form("hDTOA_TWC0_C0_B%d", i));
-        hDTOA_TWC0_C0[i]->Sumw2();
         hDTOA_TWC0_C0[i]->SetTitle(Form("#DeltaTOA TWC0 C0 For Board %d;#DeltaTOA%d", i, i));
         hDTOA_TWC0_C1[i] = hDTOA_TWC0vsTOT_C1[i]->ProjectionY(Form("hDTOA_TWC0_C1_B%d", i));
-        hDTOA_TWC0_C1[i]->Sumw2();
         hDTOA_TWC0_C1[i]->SetTitle(Form("#DeltaTOA TWC0 C1 For Board %d;#DeltaTOA%d", i, i));
         hDTOA_TWC0_C2[i] = hDTOA_TWC0vsTOT_C2[i]->ProjectionY(Form("hDTOA_TWC0_C2_B%d", i));
-        hDTOA_TWC0_C2[i]->Sumw2();
         hDTOA_TWC0_C2[i]->SetTitle(Form("#DeltaTOA TWC0 C2 For Board %d;#DeltaTOA%d", i, i));
 
         hDTOA_TWC1_C0[i] = hDTOA_TWC1vsTOT_C0[i]->ProjectionY(Form("hDTOA_TWC1_C0_B%d", i));
-        hDTOA_TWC1_C0[i]->Sumw2();
         hDTOA_TWC1_C0[i]->SetTitle(Form("#DeltaTOA TWC1 C0 For Board %d;#DeltaTOA%d", i, i));
         hDTOA_TWC1_C1[i] = hDTOA_TWC1vsTOT_C1[i]->ProjectionY(Form("hDTOA_TWC1_C1_B%d", i));
-        hDTOA_TWC1_C1[i]->Sumw2();
         hDTOA_TWC1_C1[i]->SetTitle(Form("#DeltaTOA TWC1 C1 For Board %d;#DeltaTOA%d", i, i));
         hDTOA_TWC1_C2[i] = hDTOA_TWC1vsTOT_C2[i]->ProjectionY(Form("hDTOA_TWC1_C2_B%d", i));
-        hDTOA_TWC1_C2[i]->Sumw2();
         hDTOA_TWC1_C2[i]->SetTitle(Form("#DeltaTOA TWC1 C2 For Board %d;#DeltaTOA%d", i, i));
 
         hTOTCode_C0[i] = hTOACodevsTOTCode_C0[i]->ProjectionX(Form("hTOTCode_C0_B%d", i));
-        hTOTCode_C0[i]->Sumw2();
         hTOTCode_C0[i]->SetTitle(Form("TOTCode C0 For Board %d;TOTCode%d", i, i));
         hTOTCode_C1[i] = hTOACodevsTOTCode_C1[i]->ProjectionX(Form("hTOTCode_C1_B%d", i));
-        hTOTCode_C1[i]->Sumw2();
         hTOTCode_C1[i]->SetTitle(Form("TOTCode C1 For Board %d;TOTCode%d", i, i));
         hTOTCode_C2[i] = hTOACodevsTOTCode_C2[i]->ProjectionX(Form("hTOTCode_C2_B%d", i));
-        hTOTCode_C2[i]->Sumw2();
         hTOTCode_C2[i]->SetTitle(Form("TOTCode C2 For Board %d;TOTCode%d", i, i));
 
         hTOT_C0[i] = hTOAvsTOT_C0[i]->ProjectionX(Form("hTOT_C0_B%d", i));
-        hTOT_C0[i]->Sumw2();
         hTOT_C0[i]->SetTitle(Form("TOT C0 For Board %d;TOT%d", i, i));
         hTOT_C1[i] = hTOAvsTOT_C1[i]->ProjectionX(Form("hTOT_C1_B%d", i));
-        hTOT_C1[i]->Sumw2();
         hTOT_C1[i]->SetTitle(Form("TOT C1 For Board %d;TOT%d", i, i));
         hTOT_C2[i] = hTOAvsTOT_C2[i]->ProjectionX(Form("hTOT_C2_B%d", i));
-        hTOT_C2[i]->Sumw2();
         hTOT_C2[i]->SetTitle(Form("TOT C2 For Board %d;TOT%d", i, i));
 
         hCAL_C0[i] = hTOAvsCAL_C0[i]->ProjectionX(Form("hCAL_C0_B%d", i));
-        hCAL_C0[i]->Sumw2();
         hCAL_C0[i]->SetTitle(Form("CALCode C0 For Board %d;CALCode%d", i, i));
         hCAL_C1[i] = hTOAvsCAL_C1[i]->ProjectionX(Form("hCAL_C1_B%d", i));
-        hCAL_C1[i]->Sumw2();
         hCAL_C1[i]->SetTitle(Form("CALCode C1 For Board %d;CALCode%d", i, i));
         hCAL_C2[i] = hTOAvsCAL_C2[i]->ProjectionX(Form("hCAL_C2_B%d", i));
-        hCAL_C2[i]->Sumw2();
         hCAL_C2[i]->SetTitle(Form("CALCode C2 For Board %d;CALCode%d", i, i));
     }
 }
@@ -783,7 +738,10 @@ void HistoManagerETROC::writeOutput()
         hDTOACode_C1[i]->Write();
         hDTOACode_C2[i]->Write();
 
-        hDTOACode_TWC_C0[i]->Write();
+        (TBrowser *)0x57ef2eeb8f70
+
+            hDTOACode_TWC_C0[i]
+                ->Write();
         hDTOACode_TWC_C1[i]->Write();
         hDTOACode_TWC_C2[i]->Write();
 
