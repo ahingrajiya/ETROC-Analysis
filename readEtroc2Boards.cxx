@@ -33,12 +33,16 @@ R__LOAD_LIBRARY(build / libETROC2.dylib);
 //________________
 int main(int argc, char const *argv[])
 {
+    TString InputFile = argv[0];
+    Bool_t isLeftSide = argv[1];
+    Bool_t isRightSide = argv[2];
+    TString OutputFile = argv[3];
 
     // int readEtroc2Boards() {
 
-    const Char_t *inFileName = "/home/abhi/etroc_analysis/ETROC2/build/oEtroc2Trans.root";
+    // const Char_t *inFileName = "/home/abhi/etroc_analysis/ETROC2/build/oEtroc2Trans.root";
 
-    TFile *inFile = TFile::Open(inFileName);
+    TFile *inFile = TFile::Open(Form("%s", InputFile.Data()));
 
     if (!inFile->IsOpen() || inFile->IsZombie())
     {
@@ -55,42 +59,52 @@ int main(int argc, char const *argv[])
     h1->Sumw2();
     auto *h2 = new TH1D("h2", "Event", 10000, 0., 10000);
     h2->Sumw2();
-    auto *h3 = new TH1D("h3", "#DeltaTOA Code", 200, -100., 100.);
-    h3->Sumw2();
-    auto *h4 = new TH1D("h4", "#DeltaTOA Code after Correction", 200, -100., 100.);
-    h4->Sumw2();
-    auto *h5 = new TH1D("h5", "#DeltaTOA Code after Correction For Board 0", 200, -100., 100.);
-    h5->Sumw2();
-    auto *h6 = new TH1D("h6", "#DeltaTOA Code after Correction For Board 1", 200, -100., 100.);
-    h6->Sumw2();
+    // auto *h3 = new TH1D("h3", "#DeltaTOA Code", 200, -100., 100.);
+    // h3->Sumw2();
+    // auto *h4 = new TH1D("h4", "#DeltaTOA Code after Correction", 200, -100., 100.);
+    // h4->Sumw2();
+    // auto *h5 = new TH1D("h5", "#DeltaTOA Code after Correction For Board 0", 200, -100., 100.);
+    // h5->Sumw2();
+    // auto *h6 = new TH1D("h6", "#DeltaTOA Code after Correction For Board 1", 200, -100., 100.);
+    // h6->Sumw2();
 
-    auto *h7 = new TH1D("h7", "#DeltaTOA", 200, -2., 2.);
-    h7->Sumw2();
-    auto *h8 = new TH1D("h8", "#DeltaTOA after Correction", 200, -2., 2.);
-    h8->Sumw2();
-    auto *h9 = new TH1D("h9", "#DeltaTOA after Correction For Board 0", 200, -2., 2.);
-    h9->Sumw2();
-    auto *h10 = new TH1D("h10", "#DeltaTOA after Correction For Board 1", 200, -2., 2.);
-    h10->Sumw2();
+    // auto *h7 = new TH1D("h7", "#DeltaTOA", 200, -2., 2.);
+    // h7->Sumw2();
+    // auto *h8 = new TH1D("h8", "#DeltaTOA after Correction", 200, -2., 2.);
+    // h8->Sumw2();
+    // auto *h9 = new TH1D("h9", "#DeltaTOA after Correction For Board 0", 200, -2., 2.);
+    // h9->Sumw2();
+    // auto *h10 = new TH1D("h10", "#DeltaTOA after Correction For Board 1", 200, -2., 2.);
+    // h10->Sumw2();
 
-    auto *h11 = new TH1D("h11", "#DeltaTOA BC", 200, -2., 2.);
-    h11->Sumw2();
+    // auto *h11 = new TH1D("h11", "#DeltaTOA BC", 200, -2., 2.);
+    // h11->Sumw2();
 
-    auto *h12 = new TH1D("h12", "#DeltaTOA AC", 200, -2., 2.);
-    h12->Sumw2();
+    // auto *h12 = new TH1D("h12", "#DeltaTOA AC", 200, -2., 2.);
+    // h12->Sumw2();
+
+    ///@brief Description of C0, C1 and C2
+    /// C0 = No Selections
+    /// C1 = TOA Selections Applied
+    /// C2 = TOT and TOT and CAL Selections Applied
 
     TH2D *hDROWvsDCOL = new TH2D("hDROWvsDCOL", "DROW vs DCOL", 32, -16., 16., 32, -16., 16.);
     hDROWvsDCOL->Sumw2();
 
-    TH2D *hTOAvsTOA = new TH2D("hTOA_CodevsTOA_Code", "TOA Code vs. TOA Code;TOA Code #0;TOA Code #1", 750, 0., 750., 750, 0., 750.);
-    hTOAvsTOA->Sumw2();
-    TH2D *hTOAvsTOA_Corrected = new TH2D("hTOA_CodevsTOA_Code_Corrected", "TOA Code Corrected vs. TOA Code Corrected ;TOA Code #0;TOA Code #1", 750, 0., 750., 750, 0., 750.);
-    hTOAvsTOA_Corrected->Sumw2();
+    TH2D *hTOA_Code1vsTOA_Code0_C0 = new TH2D("hTOA_Code1vsTOA_Code0_C0", "TOA Code vs. TOA Code;TOA Code #0;TOA Code #1", 750, 0., 750., 750, 0., 750.);
+    hTOA_Code1vsTOA_Code0_C0->Sumw2();
+    TH2D *hTOA_Code0vsTOA_Code1_Corrected_C0 = new TH2D("hTOA_Code1VsTOA_Code0_Corrected_C0", "TOA Code Corrected vs. TOA Code Corrected ;TOA Code #0;TOA Code #1", 750, 0., 750., 750, 0., 750.);
+    hTOA_Code0vsTOA_Code1_Corrected_C0->Sumw2();
 
-    TH2D *hActualTOAvsActualTOA = new TH2D("hTOAvsTOA", "TOA vs. TOA ; TOA #0; TOA #1", 150, 0., 15., 150, 0., 15.);
-    hActualTOAvsActualTOA->Sumw2();
-    TH2D *hActualTOAvsActualTOA_Corrected = new TH2D("hTOAvsTOA_Corrected", "TOA Corrected vs. TOA Corrected ;TOA #0;TOA #1", 150, 0., 15., 150, 0., 15.);
-    hActualTOAvsActualTOA_Corrected->Sumw2();
+    TH2D *hTOA_Code1vsTOA_Code0_C1 = new TH2D("hTOA_Code1vsTOA_Code0_C1", "TOA Code vs. TOA Code;TOA Code #0;TOA Code #1", 750, 0., 750., 750, 0., 750.);
+    hTOA_Code1vsTOA_Code0_C1->Sumw2();
+    TH2D *hTOA_Code0vsTOA_Code1_Corrected_C1 = new TH2D("hTOA_Code1VsTOA_Code0_Corrected_C1", "TOA Code Corrected vs. TOA Code Corrected ;TOA Code #0;TOA Code #1", 750, 0., 750., 750, 0., 750.);
+    hTOA_Code0vsTOA_Code1_Corrected_C1->Sumw2();
+
+    TH2D *hTOA1vsTOA0 = new TH2D("hTOA1vsTOA0", "TOA vs. TOA ; TOA #0; TOA #1", 150, 0., 15., 150, 0., 15.);
+    hTOA1vsTOA0->Sumw2();
+    TH2D *hTOA1vsTOA0_Corrected = new TH2D("hTOA1vsTOA0_Corrected", "TOA Corrected vs. TOA Corrected ;TOA #0;TOA #1", 150, 0., 15., 150, 0., 15.);
+    hTOA1vsTOA0_Corrected->Sumw2();
 
     const Int_t nBoards = 2;
     TH1D *hNHits[nBoards];
