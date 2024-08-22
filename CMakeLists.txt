@@ -40,11 +40,14 @@ link_directories(${ROOT_LIBRARY_DIR})
 # List of headers
 set(HEADERS
     Hit.h
+    BaseHistoManager.h
+    HistoManagerETROC.h
 )
 
 # List of sources
 set(SOURCES
     Hit.cc
+    HistoManagerETROC.cc
     #G__${libname}.cxx
     # etrocTrans2ROOT.cxx
 )

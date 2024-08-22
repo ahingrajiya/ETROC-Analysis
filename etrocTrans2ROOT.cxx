@@ -19,7 +19,7 @@ using namespace std;
 int main(int argc, char const *argv[])
 {
 
-    const Char_t *inFileName = "/home/abhi/etroc_analysis/ETROC2/data/path.txt";
+    const Char_t *inFileName = "/home/abhishek/analysis/etroc_analysis/ETROC2/data/path.txt";
     const Char_t *oFileName = "oEtroc2Trans.root";
 
     // Data structure
@@ -107,9 +107,9 @@ int main(int argc, char const *argv[])
                 hit.setErrorCode(errorCode);
                 hit.setColumn(column);
                 hit.setRow(row);
-                hit.setTot(tot);
-                hit.setToa(toa);
-                hit.setCal(cal);
+                hit.setTotCode(tot);
+                hit.setToaCode(toa);
+                hit.setCalCode(cal);
 
                 // Add hit to a proper board
                 switch (boardNumber)

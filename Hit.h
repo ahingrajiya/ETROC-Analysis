@@ -25,22 +25,21 @@ public:
   void setErrorCode(const Int_t &ec) { fErrorCode = (Char_t)ec; }
   void setColumn(const Int_t &c) { fColumn = (UChar_t)c; }
   void setRow(const Int_t &r) { fRow = (UChar_t)r; }
-  void setTot(const Int_t &tot) { fTot = (UShort_t)tot; }
-  void setToa(const Int_t &toa) { fToa = (UShort_t)toa; }
-  void setCal(const Int_t &cal) { fCal = (UShort_t)cal; }
+  void setTotCode(const Int_t &tot) { fTotCode = (UShort_t)tot; }
+  void setToaCode(const Int_t &toa) { fToaCode = (UShort_t)toa; }
+  void setCalCode(const Int_t &cal) { fCalCode = (UShort_t)cal; }
 
   // Getters
   Int_t boardNumber() const { return (Int_t)fBoardNumber; }
   Int_t errorCode() const { return (Int_t)fErrorCode; }
   Int_t column() const { return (Int_t)fColumn; }
   Int_t row() const { return (Int_t)fRow; }
-  Int_t tot() const { return (Int_t)fTot; }
-  Int_t toa() const { return (Int_t)fToa; }
-  Int_t cal() const { return (Int_t)fCal; }
-  Float_t bins() const { return 3.125 / cal(); }
-  Float_t actual_toa() const { return 12.5 - toa() * bins(); }
-  Float_t actual_toa_correction(Float_t iCorrection) const { return 12.5 - iCorrection * bins(); }
-  Float_t actual_tot() { return (2.0 * tot() - floor(tot() / 32.0)) * bins(); }
+  Int_t totcode() const { return (Int_t)fTotCode; }
+  Int_t toacode() const { return (Int_t)fToaCode; }
+  Int_t calcode() const { return (Int_t)fCalCode; }
+  Float_t bins() const { return 3.125 / calcode(); }
+  Float_t toa() const { return 12.5 - toacode() * bins(); }
+  Float_t tot() { return (2.0 * totcode() - floor(totcode() / 32.0)) * bins(); }
 
 private:
   /// @brief Board number
@@ -52,11 +51,11 @@ private:
   /// @brief Pixel row number (-1 if disabled)
   Char_t fRow;
   /// @brief Time over threshold
-  UShort_t fTot;
+  UShort_t fTotCode;
   /// @brief Time of arrival
-  UShort_t fToa;
+  UShort_t fToaCode;
   /// @brief Charge
-  UShort_t fCal;
+  UShort_t fCalCode;
 
   ClassDef(Hit, 1)
 };
