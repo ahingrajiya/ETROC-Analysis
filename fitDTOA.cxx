@@ -19,7 +19,7 @@
 #include <iostream>
 #include <vector>
 
-Int_t status = gSystem->Load("/home/abhi/etroc_analysis/ETROC2/build/libETROC2.dylib");
+Int_t status = gSystem->Load("/home/abhishek/analysis/etroc_analysis/ETROC2/build/libETROC2.dylib");
 
 using namespace std;
 
@@ -29,57 +29,91 @@ R__LOAD_LIBRARY(build / libETROC2.dylib);
 
 int main(int argc, char const *argv[])
 {
-    TFile *f_in = TFile::Open("/home/abhi/etroc_analysis/ETROC2/build/oReadEtroc2.root");
+    TFile *f_inLeft = TFile::Open("/home/abhishek/analysis/etroc_analysis/ETROC2/build/oReadEtroc2_LeftSide_Mean.root");
+    TFile *f_inRight = TFile::Open("/home/abhishek/analysis/etroc_analysis/ETROC2/build/oReadEtroc2_RightSide_Mean.root");
 
-    TProfile *DTOA_TOT0_Code = (TProfile *)f_in->Get("pDTOA_CodevsTOT_Code_0");
-    TProfile *DTOA_TOT1_Code = (TProfile *)f_in->Get("pDTOA_CodevsTOT_Code_1");
+    TProfile *DTOA_TOT0_Code_L = (TProfile *)f_inLeft->Get("pDTOACodevsTOTCode_B0");
+    TProfile *DTOA_TOT1_Code_L = (TProfile *)f_inLeft->Get("pDTOACodevsTOTCode_B1");
+    TProfile *DTOA_TOT0_L = (TProfile *)f_inLeft->Get("pDTOAvsTOT_B0");
+    TProfile *DTOA_TOT1_L = (TProfile *)f_inLeft->Get("pDTOAvsTOT_B1");
 
-    TProfile *DTOA_TOT0 = (TProfile *)f_in->Get("pDTOAvsTOT_0");
-    TProfile *DTOA_TOT1 = (TProfile *)f_in->Get("pDTOAvsTOT_1");
+    TProfile *DTOA_TOT0_Code_R = (TProfile *)f_inRight->Get("pDTOACodevsTOTCode_B0");
+    TProfile *DTOA_TOT1_Code_R = (TProfile *)f_inRight->Get("pDTOACodevsTOTCode_B1");
+    TProfile *DTOA_TOT0_R = (TProfile *)f_inRight->Get("pDTOAvsTOT_B0");
+    TProfile *DTOA_TOT1_R = (TProfile *)f_inRight->Get("pDTOAvsTOT_B1");
 
-    TH1D *DTOA_Code = (TH1D *)f_in->Get("h3");
-    DTOA_Code->Rebin(2);
-    TH1D *DTOA_Code_Corrected = (TH1D *)f_in->Get("h4");
-    TH1D *DTOA_Code_Corrected0 = (TH1D *)f_in->Get("h5");
-    TH1D *DTOA_Code_Corrected1 = (TH1D *)f_in->Get("h6");
+    TF1 *DTOACode_TOTCode_Fit = new TF1("DTOACode_TOTCode_Fit", "pol2", 40.0, 160.0);
+    TF1 *DTOA_TOT_Fit = new TF1("DTOA_TOT_Fit", "pol2", 0.0, 6.20);
+    cout << "Left Side" << endl;
+    cout << "Board0 Code Fit" << endl;
+    DTOA_TOT0_Code_L->Fit("DTOACode_TOTCode_Fit", "SRME", "", 85.0, 120.0);
+    cout << "Board1 Code Fit" << endl;
+    DTOA_TOT1_Code_L->Fit("DTOACode_TOTCode_Fit", "SRME", "", 85.0, 120.0);
 
-    TH1D *DTOA = (TH1D *)f_in->Get("h7");
-    TH1D *DTOA_Corrected = (TH1D *)f_in->Get("h8");
-    TH1D *DTOA_Corrected0 = (TH1D *)f_in->Get("h9");
-    TH1D *DTOA_Corrected1 = (TH1D *)f_in->Get("h10");
+    cout << "Board0 Fit" << endl;
+    DTOA_TOT0_L->Fit("DTOA_TOT_Fit", "SRME", "", 2.9, 4.1);
+    cout << "Board1 Fit" << endl;
+    DTOA_TOT1_L->Fit("DTOA_TOT_Fit", "SRME", "", 2.9, 4.1);
 
-    TF1 *DTOA_TOT_Code_Fit = new TF1("DTOA_TOT_Code_Fit", "pol5", 40.0, 160.0);
-    DTOA_TOT0_Code->Fit("DTOA_TOT_Code_Fit", "", "", 40.0, 160.0);
-    DTOA_TOT1_Code->Fit("DTOA_TOT_Code_Fit", "", "", 40.0, 160.0);
+    cout << "Right Side" << endl;
+    cout << "Board0 Code Fit" << endl;
+    DTOA_TOT0_Code_R->Fit("DTOACode_TOTCode_Fit", "SRME", "", 85.0, 120.0);
+    cout << "Board1 Code Fit" << endl;
+    DTOA_TOT1_Code_R->Fit("DTOACode_TOTCode_Fit", "SRME", "", 85.0, 120.0);
 
-    TF1 *DTOA_TOT_Fit = new TF1("DTOA_TOT_Fit", "pol8", 0.0, 6.20);
-    DTOA_TOT0->Fit("DTOA_TOT_Fit", "", "", 1.1, 6.2);
-    DTOA_TOT1->Fit("DTOA_TOT_Fit", "", "", 1.1, 6.2);
+    cout << "Board0 Fit" << endl;
+    DTOA_TOT0_R->Fit("DTOA_TOT_Fit", "SRME", "", 3.1, 4.3);
+    cout << "Board1 Fit" << endl;
+    DTOA_TOT1_R->Fit("DTOA_TOT_Fit", "SRME", "", 3.15, 4.55);
 
-    TF1 *DTOA_Fit = new TF1("DTOA_Fit", "gaus", -100.0, 100.0);
-    DTOA_Code->Fit("DTOA_Fit", "", "", -60.0, 60.0);
-    DTOA_Code_Corrected->Fit("DTOA_Fit", "", "", -60.0, 60.0);
-    DTOA_Code_Corrected0->Fit("DTOA_Fit", "", "", -60.0, 60.0);
-    DTOA_Code_Corrected1->Fit("DTOA_Fit", "", "", -60.0, 60.0);
+    TF1 *DTOA_Fit = new TF1("DTOA_Fit", "gaus", -1.0, 1.0);
 
-    DTOA->Fit("DTOA_Fit", "", "", -1.5, 1.5);
-    DTOA_Corrected->Fit("DTOA_Fit", "", "", -1.5, 1.5);
-    DTOA_Corrected0->Fit("DTOA_Fit", "", "", -1.5, 1.5);
-    DTOA_Corrected1->Fit("DTOA_Fit", "", "", -1.5, 1.5);
+    cout << "DTOA Fits for Board0" << endl;
+    TH1D *DTOA_C2_L = (TH1D *)f_inLeft->Get("hDTOA_C2_B0");
+    TH1D *DTOA_TWC_C2_L = (TH1D *)f_inLeft->Get("hDTOA_TWC_C2_B0");
+    TH1D *DTOA_TWC0_C2_L = (TH1D *)f_inLeft->Get("hDTOA_TWC0_C2_B0");
+    TH1D *DTOA_TWC1_C2_L = (TH1D *)f_inLeft->Get("hDTOA_TWC1_C2_B0");
 
-    TFile *f_out = TFile::Open("oFitResult.root", "RECREATE");
-    DTOA_TOT0_Code->Write();
-    DTOA_TOT1_Code->Write();
-    DTOA_TOT0->Write();
-    DTOA_TOT1->Write();
-    DTOA_Code->Write();
-    DTOA_Code_Corrected->Write();
-    DTOA_Code_Corrected0->Write();
-    DTOA_Code_Corrected1->Write();
-    DTOA->Write();
-    DTOA_Corrected->Write();
-    DTOA_Corrected0->Write();
-    DTOA_Corrected1->Write();
+    DTOA_C2_L->Fit("DTOA_Fit", "SRME", "", -0.05, 0.4);
+    DTOA_TWC_C2_L->Fit("DTOA_Fit", "SRME", "", -0.325, -0.075);
+    DTOA_TWC0_C2_L->Fit("DTOA_Fit", "SRME", "", -0.2, 0.2);
+    DTOA_TWC1_C2_L->Fit("DTOA_Fit", "SRME", "", -0.25, 0.25);
+
+    cout << "DTOA Fits for Board1" << endl;
+    TH1D *DTOA_C2_R = (TH1D *)f_inRight->Get("hDTOA_C2_B0");
+    TH1D *DTOA_TWC_C2_R = (TH1D *)f_inRight->Get("hDTOA_TWC_C2_B0");
+    TH1D *DTOA_TWC0_C2_R = (TH1D *)f_inRight->Get("hDTOA_TWC0_C2_B0");
+    TH1D *DTOA_TWC1_C2_R = (TH1D *)f_inRight->Get("hDTOA_TWC1_C2_B0");
+
+    DTOA_C2_R->Fit("DTOA_Fit", "SRME", "", -0.1, 0.425);
+    DTOA_TWC_C2_R->Fit("DTOA_Fit", "SRME", "", -0.275, -0.05);
+    DTOA_TWC0_C2_R->Fit("DTOA_Fit", "SRME", "", -0.25, 0.25);
+    DTOA_TWC1_C2_R->Fit("DTOA_Fit", "SRME", "", -0.2, 0.2);
+
+    TFile *f_out = TFile::Open("oFitResult_DTOA.root", "RECREATE");
+    gDirectory->mkdir("LeftSide");
+    gDirectory->cd("LeftSide");
+    DTOA_TOT0_Code_L->Write();
+    DTOA_TOT1_Code_L->Write();
+    DTOA_TOT0_L->Write();
+    DTOA_TOT1_L->Write();
+    DTOA_C2_L->Write();
+    DTOA_TWC_C2_L->Write();
+    DTOA_TWC0_C2_L->Write();
+    DTOA_TWC1_C2_L->Write();
+
+    gDirectory->cd("../");
+    gDirectory->mkdir("RightSide");
+    gDirectory->cd("RightSide");
+    DTOA_TOT0_Code_R->Write();
+    DTOA_TOT1_Code_R->Write();
+    DTOA_TOT0_R->Write();
+    DTOA_TOT1_R->Write();
+    DTOA_C2_R->Write();
+    DTOA_TWC_C2_R->Write();
+    DTOA_TWC0_C2_R->Write();
+    DTOA_TWC1_C2_R->Write();
+
     f_out->Write();
     f_out->Close();
 

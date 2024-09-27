@@ -37,7 +37,10 @@ public:
   Int_t totcode() const { return (Int_t)fTotCode; }
   Int_t toacode() const { return (Int_t)fToaCode; }
   Int_t calcode() const { return (Int_t)fCalCode; }
-  Float_t bins() const { return 3.125 / calcode(); }
+  Float_t bins() const
+  {
+    return 3.125 / calcode();
+  }
   Float_t toa() const { return 12.5 - toacode() * bins(); }
   Float_t tot() { return (2.0 * totcode() - floor(totcode() / 32.0)) * bins(); }
 

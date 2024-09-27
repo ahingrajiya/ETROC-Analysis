@@ -42,12 +42,16 @@ set(HEADERS
     Hit.h
     BaseHistoManager.h
     HistoManagerETROC.h
+    HistoManagerETROC4Boards.h
+    Correction.h
 )
 
 # List of sources
 set(SOURCES
     Hit.cc
     HistoManagerETROC.cc
+    HistoManagerETROC4Boards.cc
+    Correction.cc
     #G__${libname}.cxx
     # etrocTrans2ROOT.cxx
 )
@@ -81,6 +85,16 @@ target_link_libraries(readEtroc2Boards ${libname} ${ROOT_LIBRARIES})
 add_executable(fitDTOA fitDTOA.cxx)
 # Link the ROOT libraries
 target_link_libraries(fitDTOA ${libname} ${ROOT_LIBRARIES})
+
+# Executable
+add_executable(fit4Boards fit4Boards.cxx)
+# Link the ROOT libraries
+target_link_libraries(fit4Boards ${libname} ${ROOT_LIBRARIES})
+
+# Executable
+add_executable(readEtroc4Boards readEtroc4Boards.cxx)
+# Link the ROOT libraries
+target_link_libraries(readEtroc4Boards ${libname} ${ROOT_LIBRARIES})
 
 # Custom target for cleaning
 add_custom_target(distclean

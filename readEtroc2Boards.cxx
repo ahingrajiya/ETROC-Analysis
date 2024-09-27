@@ -21,7 +21,7 @@
 #include <iostream>
 #include <vector>
 
-Int_t status = gSystem->Load("/home/abhi/etroc_analysis/ETROC2/build/libETROC2.dylib");
+Int_t status = gSystem->Load("/home/abhishek/analysis/etroc_analysis/ETROC2/build/libETROC2.dylib");
 
 // ETROC2 headers
 #include "Hit.h"
@@ -35,8 +35,8 @@ R__LOAD_LIBRARY(build / libETROC2.dylib);
 int main(int argc, char const *argv[])
 {
     // TString InputFile = argv[0];
-    Bool_t isLeftSide = kTRUE;
-    Bool_t isRightSide = kFALSE;
+    Bool_t isLeftSide = kFALSE;
+    Bool_t isRightSide = kTRUE;
 
     const Char_t *inFileName = "/home/abhishek/analysis/etroc_analysis/ETROC2/build/oEtroc2Trans.root";
 
@@ -59,15 +59,36 @@ int main(int argc, char const *argv[])
     // Fitting functions for the Time Walk corrections
     //
 
-    TF1 *board0_fit = new TF1("board0_fit", "pol5", 40, 160);
-    board0_fit->SetParameters(281.326, -16.7643, 0.364222, -0.0037943, 1.93689e-05, -3.86596e-08);
-    TF1 *board1_fit = new TF1("board1_fit", "pol5", 40.0, 160.0);
-    board1_fit->SetParameters(-119.109, 10.7384, -0.275222, 0.00316887, -1.72771e-05, 3.60563e-08);
+    // TF1 *board0_fit_l = new TF1("board0_fit_l", "pol2", 40, 160);
+    // board0_fit_l->SetParameters(1.23398e+00, -3.69536e-01, 1.83984e-02);
+    // TF1 *board1_fit_l = new TF1("board1_fit_l", "pol2", 40.0, 160.0);
+    // board1_fit_l->SetParameters(-1.15984e+00, 5.30278e-01, -4.33617e-02);
+    // TF1 *board0_fit_r = new TF1("board0_fit_r", "pol2", 40, 160);
+    // board0_fit_r->SetParameters(1.20714e+00, -3.26416e-01, 1.13435e-02);
+    // TF1 *board1_fit_r = new TF1("board1_fit_r", "pol2", 40.0, 160.0);
+    // board1_fit_r->SetParameters(-9.53229e-01, 3.81659e-01, -2.12059e-02);
 
-    TF1 *actual_board0_fit = new TF1("actual_board0_fit", "pol8", 1.1, 6.2);
-    actual_board0_fit->SetParameters(-12.4467, 41.1888, -52.767, 36.8273, -15.4872, 4.02893, -0.634154, 0.0552851, -0.00204631);
-    TF1 *actual_board1_fit = new TF1("actual_board1_fit", "pol8", 1.1, 6.2);
-    actual_board1_fit->SetParameters(24.8491, -69.4859, 79.9827, -50.7076, 19.5084, -4.67229, 0.680823, -0.0552109, 0.00190872);
+    TF1 *board0_fit_l = new TF1("board0_fit_l", "pol2", 40, 160);
+    board0_fit_l->SetParameters(1.27869e+00, -3.82123e-01, 1.94951e-02);
+    TF1 *board1_fit_l = new TF1("board1_fit_l", "pol2", 40.0, 160.0);
+    board1_fit_l->SetParameters(-1.01993e+00, 4.63367e-01, -3.42996e-02);
+    TF1 *board0_fit_r = new TF1("board0_fit_r", "pol2", 40, 160);
+    board0_fit_r->SetParameters(1.26374e+00, -3.60929e-01, 1.48737e-02);
+    TF1 *board1_fit_r = new TF1("board1_fit_r", "pol2", 40.0, 160.0);
+    board1_fit_r->SetParameters(-9.60380e-01, 3.76384e-01, -2.06889e-02);
+
+    TF1 *board0_code_fit_l = new TF1("board0_code_fit_l", "pol2", 85., 120.);
+    board0_code_fit_l->SetParameters(-4.84508e+01, 5.42358e-01, -3.11679e-04);
+    TF1 *board1_code_fit_l = new TF1("board1_code_fit_l", "pol2", 85., 120.);
+    board1_code_fit_l->SetParameters(5.28442e+01, -5.08792e-01, 3.38332e-04);
+    TF1 *board0_code_fit_r = new TF1("board0_code_fit_r", "pol2", 85., 120.);
+    board0_code_fit_r->SetParameters(-4.95867e+01, 5.76499e-01, -4.78578e-04);
+    TF1 *board1_code_fit_r = new TF1("board1_code_fit_r", "pol2", 85., 120.);
+    board1_code_fit_r->SetParameters(5.87334e+01, -6.57934e-01, 1.09718e-03);
+
+    Float_t corrections[2][2]{0};
+    Float_t code_corrections[2][2]{0};
+
     //
     // Create variables to fill
     //
@@ -125,11 +146,12 @@ int main(int argc, char const *argv[])
             for (UInt_t iHit{0}; iHit < mBoard0->size(); iHit++)
             {
                 hit1 = mBoard0->at(iHit);
+                hit1.setBoardNumber(hit1.boardNumber());
 
                 if ((hit1.toacode() > 250) && (hit1.toacode() < 500))
                 {
                     TOAPass[0] = kTRUE;
-                    if (hit1.totcode() > 70 && hit1.totcode() < 130)
+                    if (hit1.totcode() > 85 && hit1.totcode() < 120)
                         AllPass[0] = kTRUE;
                 }
                 if (isLeftSide)
@@ -159,6 +181,12 @@ int main(int argc, char const *argv[])
                                 hm->hTOAvsCAL_C2[0]->Fill(hit1.calcode(), hit1.toa());
                                 hm->hTOTCodevsCALCode_C2[0]->Fill(hit1.calcode(), hit1.totcode());
                                 hm->hTOTvsCAL_C2[0]->Fill(hit1.calcode(), hit1.tot());
+                                code_corrections[0][0] = board0_code_fit_l->Eval(hit1.totcode());
+                                corrections[0][0] = board0_fit_l->Eval(hit1.tot());
+                                hm->hTOACode_TWCvsTOTCode_C2[0]->Fill(hit1.totcode(), hit1.toacode() - code_corrections[0][0]);
+                                hm->hTOA_TWCvsTOT_C2[0]->Fill(hit1.tot(), hit1.toa() - corrections[0][0]);
+                                hm->hTOACode_TWCvsCALCode_C2[0]->Fill(hit1.calcode(), hit1.toacode() - code_corrections[0][0]);
+                                hm->hTOA_TWCvsCAL_C2[0]->Fill(hit1.calcode(), hit1.toa() - corrections[0][0]);
                             }
                         }
                     }
@@ -190,6 +218,12 @@ int main(int argc, char const *argv[])
                                 hm->hTOAvsCAL_C2[0]->Fill(hit1.calcode(), hit1.toa());
                                 hm->hTOTCodevsCALCode_C2[0]->Fill(hit1.calcode(), hit1.totcode());
                                 hm->hTOTvsCAL_C2[0]->Fill(hit1.calcode(), hit1.tot());
+                                code_corrections[1][0] = board0_code_fit_r->Eval(hit1.totcode());
+                                corrections[1][0] = board0_fit_r->Eval(hit1.tot());
+                                hm->hTOACode_TWCvsTOTCode_C2[0]->Fill(hit1.totcode(), hit1.toacode() - code_corrections[1][0]);
+                                hm->hTOA_TWCvsTOT_C2[0]->Fill(hit1.tot(), hit1.toa() - corrections[1][0]);
+                                hm->hTOACode_TWCvsCALCode_C2[0]->Fill(hit1.calcode(), hit1.toacode() - code_corrections[1][0]);
+                                hm->hTOA_TWCvsCAL_C2[0]->Fill(hit1.calcode(), hit1.toa() - corrections[1][0]);
                             }
                         }
                     }
@@ -198,11 +232,11 @@ int main(int argc, char const *argv[])
             for (UInt_t iHit{0}; iHit < mBoard1->size(); iHit++)
             {
                 hit2 = mBoard1->at(iHit);
-
+                // std::cout << hit2.boardNumber() << std::endl;
                 if ((hit2.toacode() > 250) && (hit2.toacode() < 500))
                 {
                     TOAPass[1] = kTRUE;
-                    if (hit2.totcode() > 70 && hit2.totcode() < 130)
+                    if (hit2.totcode() > 85 && hit2.totcode() < 120)
                         AllPass[1] = kTRUE;
                 }
                 if (isLeftSide)
@@ -232,6 +266,12 @@ int main(int argc, char const *argv[])
                                 hm->hTOAvsCAL_C2[1]->Fill(hit2.calcode(), hit2.toa());
                                 hm->hTOTCodevsCALCode_C2[1]->Fill(hit2.calcode(), hit2.totcode());
                                 hm->hTOTvsCAL_C2[1]->Fill(hit2.calcode(), hit2.tot());
+                                code_corrections[0][1] = board1_code_fit_l->Eval(hit2.totcode());
+                                corrections[0][1] = board1_fit_l->Eval(hit2.tot());
+                                hm->hTOACode_TWCvsTOTCode_C2[1]->Fill(hit2.totcode(), hit2.toacode() + code_corrections[0][1]);
+                                hm->hTOA_TWCvsTOT_C2[1]->Fill(hit2.tot(), hit2.toa() + corrections[0][1]);
+                                hm->hTOACode_TWCvsCALCode_C2[1]->Fill(hit2.calcode(), hit2.toacode() + code_corrections[0][1]);
+                                hm->hTOA_TWCvsCAL_C2[1]->Fill(hit2.calcode(), hit2.toa() + corrections[0][1]);
                             }
                         }
                     }
@@ -263,6 +303,12 @@ int main(int argc, char const *argv[])
                                 hm->hTOAvsCAL_C2[1]->Fill(hit2.calcode(), hit2.toa());
                                 hm->hTOTCodevsCALCode_C2[1]->Fill(hit2.calcode(), hit2.totcode());
                                 hm->hTOTvsCAL_C2[1]->Fill(hit2.calcode(), hit2.tot());
+                                code_corrections[1][1] = board1_code_fit_r->Eval(hit2.totcode());
+                                corrections[1][1] = board1_fit_r->Eval(hit2.tot());
+                                hm->hTOACode_TWCvsTOTCode_C2[1]->Fill(hit2.totcode(), hit2.toacode() + code_corrections[1][1]);
+                                hm->hTOA_TWCvsTOT_C2[1]->Fill(hit2.tot(), hit2.toa() + corrections[1][1]);
+                                hm->hTOACode_TWCvsCALCode_C2[1]->Fill(hit2.calcode(), hit2.toacode() + code_corrections[1][1]);
+                                hm->hTOA_TWCvsCAL_C2[1]->Fill(hit2.calcode(), hit2.toa() + corrections[1][1]);
                             }
                         }
                     }
@@ -297,6 +343,70 @@ int main(int argc, char const *argv[])
                         hm->pDTOAvsTOT[0]->Fill(hit1.tot(), hit1.toa() - hit2.toa());
                         hm->pDTOACodevsTOTCode[1]->Fill(hit2.totcode(), hit1.toacode() - hit2.toacode());
                         hm->pDTOAvsTOT[1]->Fill(hit2.tot(), hit1.toa() - hit2.toa());
+
+                        hm->hTOA_Code1vsTOA_Code0_TWC_C2->Fill(hit1.toacode() - code_corrections[0][0], hit2.toacode() + code_corrections[0][1]);
+                        hm->hTOA1vsTOA0_TWC_C2->Fill(hit1.toa() - corrections[0][0], hit2.toa() + corrections[0][1]);
+                        hm->hDTOACode_TWCvsTOTCode_C2[0]->Fill(hit1.totcode(), hit1.toacode() - code_corrections[0][0] - hit2.toacode() - code_corrections[0][1]);
+                        hm->hDTOA_TWCvsTOT_C2[0]->Fill(hit1.tot(), hit1.toa() - corrections[0][0] - hit2.toa() - corrections[0][1]);
+                        hm->hDTOACode_TWC0vsTOTCode_C2[0]->Fill(hit1.totcode(), hit1.toacode() - code_corrections[0][0] - hit2.toacode());
+                        hm->hDTOA_TWC0vsTOT_C2[0]->Fill(hit1.tot(), hit1.toa() - corrections[0][0] - hit2.toa());
+                        hm->hDTOACode_TWC1vsTOTCode_C2[0]->Fill(hit1.totcode(), hit1.toacode() - hit2.toacode() - code_corrections[0][1]);
+                        hm->hDTOA_TWC1vsTOT_C2[0]->Fill(hit1.tot(), hit1.toa() - hit2.toa() - corrections[0][1]);
+
+                        hm->hDTOACode_TWCvsTOTCode_C2[1]->Fill(hit2.totcode(), hit1.toacode() - code_corrections[0][0] - hit2.toacode() - code_corrections[0][1]);
+                        hm->hDTOA_TWCvsTOT_C2[1]->Fill(hit2.tot(), hit1.toa() - corrections[0][0] - hit2.toa() - corrections[0][1]);
+                        hm->hDTOACode_TWC0vsTOTCode_C2[1]->Fill(hit2.totcode(), hit1.toacode() - code_corrections[0][0] - hit2.toacode());
+                        hm->hDTOA_TWC0vsTOT_C2[1]->Fill(hit2.tot(), hit1.toa() - corrections[0][0] - hit2.toa());
+                        hm->hDTOACode_TWC1vsTOTCode_C2[1]->Fill(hit2.totcode(), hit1.toacode() - hit2.toacode() - code_corrections[0][1]);
+                        hm->hDTOA_TWC1vsTOT_C2[1]->Fill(hit2.tot(), hit1.toa() - hit2.toa() - corrections[0][1]);
+                    }
+                }
+            }
+            if (isRightSide && RightPass[0] && RightPass[1])
+            {
+                hm->hDROWvsDCOL->Fill(hit1.column() - hit2.column(), hit1.row() - hit2.row());
+                hm->hTOA_Code1vsTOA_Code0_C0->Fill(hit1.toacode(), hit2.toacode());
+                hm->hTOA1vsTOA0_C0->Fill(hit1.toa(), hit2.toa());
+                hm->hDTOACodevsTOTCode_C0[0]->Fill(hit1.totcode(), hit1.toacode() - hit2.toacode());
+                hm->hDTOAvsTOT_C0[0]->Fill(hit1.tot(), hit1.toa() - hit2.toa());
+                hm->hDTOACodevsTOTCode_C0[1]->Fill(hit2.totcode(), hit1.toacode() - hit2.toacode());
+                hm->hDTOAvsTOT_C0[1]->Fill(hit2.tot(), hit1.toa() - hit2.toa());
+                if (TOAPass[0] && TOAPass[1])
+                {
+                    hm->hTOA_Code1vsTOA_Code0_C1->Fill(hit1.toacode(), hit2.toacode());
+                    hm->hTOA1vsTOA0_C1->Fill(hit1.toa(), hit2.toa());
+                    hm->hDTOACodevsTOTCode_C1[0]->Fill(hit1.totcode(), hit1.toacode() - hit2.toacode());
+                    hm->hDTOAvsTOT_C1[0]->Fill(hit1.tot(), hit1.toa() - hit2.toa());
+                    hm->hDTOACodevsTOTCode_C1[1]->Fill(hit2.totcode(), hit1.toacode() - hit2.toacode());
+                    hm->hDTOAvsTOT_C1[1]->Fill(hit2.tot(), hit1.toa() - hit2.toa());
+                    if (AllPass[0] && AllPass[1])
+                    {
+                        hm->hTOA_Code1vsTOA_Code0_C2->Fill(hit1.toacode(), hit2.toacode());
+                        hm->hTOA1vsTOA0_C2->Fill(hit1.toa(), hit2.toa());
+                        hm->hDTOACodevsTOTCode_C2[0]->Fill(hit1.totcode(), hit1.toacode() - hit2.toacode());
+                        hm->hDTOAvsTOT_C2[0]->Fill(hit1.tot(), hit1.toa() - hit2.toa());
+                        hm->hDTOACodevsTOTCode_C2[1]->Fill(hit2.totcode(), hit1.toacode() - hit2.toacode());
+                        hm->hDTOAvsTOT_C2[1]->Fill(hit2.tot(), hit1.toa() - hit2.toa());
+                        hm->pDTOACodevsTOTCode[0]->Fill(hit1.totcode(), hit1.toacode() - hit2.toacode());
+                        hm->pDTOAvsTOT[0]->Fill(hit1.tot(), hit1.toa() - hit2.toa());
+                        hm->pDTOACodevsTOTCode[1]->Fill(hit2.totcode(), hit1.toacode() - hit2.toacode());
+                        hm->pDTOAvsTOT[1]->Fill(hit2.tot(), hit1.toa() - hit2.toa());
+
+                        hm->hTOA_Code1vsTOA_Code0_TWC_C2->Fill(hit1.toacode() - code_corrections[1][0], hit2.toacode() + code_corrections[1][1]);
+                        hm->hTOA1vsTOA0_TWC_C2->Fill(hit1.toa() - corrections[1][0], hit2.toa() + corrections[1][1]);
+                        hm->hDTOACode_TWCvsTOTCode_C2[0]->Fill(hit1.totcode(), hit1.toacode() - code_corrections[1][0] - hit2.toacode() - code_corrections[1][1]);
+                        hm->hDTOA_TWCvsTOT_C2[0]->Fill(hit1.tot(), hit1.toa() - corrections[1][0] - hit2.toa() - corrections[1][1]);
+                        hm->hDTOACode_TWC0vsTOTCode_C2[0]->Fill(hit1.totcode(), hit1.toacode() - code_corrections[1][0] - hit2.toacode());
+                        hm->hDTOA_TWC0vsTOT_C2[0]->Fill(hit1.tot(), hit1.toa() - corrections[1][0] - hit2.toa());
+                        hm->hDTOACode_TWC1vsTOTCode_C2[0]->Fill(hit1.totcode(), hit1.toacode() - hit2.toacode() - code_corrections[1][1]);
+                        hm->hDTOA_TWC1vsTOT_C2[0]->Fill(hit1.tot(), hit1.toa() - hit2.toa() - corrections[1][1]);
+
+                        hm->hDTOACode_TWCvsTOTCode_C2[1]->Fill(hit2.totcode(), hit1.toacode() - code_corrections[1][0] - hit2.toacode() - code_corrections[1][1]);
+                        hm->hDTOA_TWCvsTOT_C2[1]->Fill(hit2.tot(), hit1.toa() - corrections[0][0] - hit2.toa() - corrections[1][1]);
+                        hm->hDTOACode_TWC0vsTOTCode_C2[1]->Fill(hit2.totcode(), hit1.toacode() - code_corrections[1][0] - hit2.toacode());
+                        hm->hDTOA_TWC0vsTOT_C2[1]->Fill(hit2.tot(), hit1.toa() - corrections[1][0] - hit2.toa());
+                        hm->hDTOACode_TWC1vsTOTCode_C2[1]->Fill(hit2.totcode(), hit1.toacode() - hit2.toacode() - code_corrections[1][1]);
+                        hm->hDTOA_TWC1vsTOT_C2[1]->Fill(hit2.tot(), hit1.toa() - hit2.toa() - corrections[1][1]);
                     }
                 }
             }
@@ -307,12 +417,12 @@ int main(int argc, char const *argv[])
     TString outFile;
     if (isLeftSide)
     {
-        outFile = "oReadEtroc2_LeftSide.root";
+        outFile = "oReadEtroc2_LeftSide_Mean.root";
     }
 
     if (isRightSide)
     {
-        outFile = "oReadEtroc2_RightSide.root";
+        outFile = "oReadEtroc2_RightSide_Mean.root";
     }
 
     if (isLeftSide && isRightSide)

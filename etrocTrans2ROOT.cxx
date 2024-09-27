@@ -19,8 +19,8 @@ using namespace std;
 int main(int argc, char const *argv[])
 {
 
-    const Char_t *inFileName = "/home/abhishek/analysis/etroc_analysis/ETROC2/data/path.txt";
-    const Char_t *oFileName = "oEtroc2Trans.root";
+    const Char_t *inFileName = "/home/abhishek/analysis/etroc_analysis/ETROC2/data/4boardsnem.txt";
+    const Char_t *oFileName = "oEtroc2Trans_4Boards.root";
 
     // Data structure
     UInt_t runId{123};
@@ -28,8 +28,8 @@ int main(int argc, char const *argv[])
     UInt_t eventId{0};
     std::vector<Hit> board0;
     std::vector<Hit> board1;
-    // std::vector<Hit> board2;
-    // std::vector<Hit> board3;
+    std::vector<Hit> board2;
+    std::vector<Hit> board3;
 
     Hit::Class()->IgnoreTObjectStreamer();
 
@@ -42,8 +42,8 @@ int main(int argc, char const *argv[])
 
     T->Branch("mBoard0", &board0);
     T->Branch("mBoard1", &board1);
-    // T->Branch("mBoard2", &board2);
-    // T->Branch("mBoard3", &board3);
+    T->Branch("mBoard2", &board2);
+    T->Branch("mBoard3", &board3);
 
     std::ifstream inputFile(inFileName);
 
@@ -97,10 +97,10 @@ int main(int argc, char const *argv[])
                 // std::cout << Form("-- type: %c bn: %d ec: %d col: %d row: %d tot: %d toa: %d cal: %d\n", type, boardNumber, errorCode, column, row, tot, toa, cal);
 
                 // Hit hit(boardNumber, errorCode, column, row, tot, toa, cal);
-                if (row == 0 and column == 3)
-                {
-                    continue;
-                }
+                // if (row == 0 and column == 3)
+                // {
+                //     continue;
+                // }
 
                 Hit hit;
                 hit.setBoardNumber(boardNumber);
@@ -120,12 +120,12 @@ int main(int argc, char const *argv[])
                 case 1:
                     board1.push_back(hit);
                     break;
-                // case 2:
-                //     board2.push_back(hit);
-                //     break;
-                // case 3:
-                //     board3.push_back(hit);
-                //     break;
+                case 2:
+                    board2.push_back(hit);
+                    break;
+                case 3:
+                    board3.push_back(hit);
+                    break;
                 default:
                     std::cout << Form("Wrong board number: %d\n", boardNumber);
                     break;
@@ -143,8 +143,8 @@ int main(int argc, char const *argv[])
                 T->Fill();
                 board0.clear();
                 board1.clear();
-                // board2.clear();
-                // board3.clear();
+                board2.clear();
+                board3.clear();
                 // Increment event counter
                 eventId++;
             }
