@@ -112,6 +112,7 @@ int main(int argc, char const *argv[])
 
     Correction *co = new Correction{};
     co->setLeftSide(isLeftSide);
+    co->init();
 
     HistoManagerETROC4Boards *hm = new HistoManagerETROC4Boards{};
     hm->setTOABins(fTOABins);
