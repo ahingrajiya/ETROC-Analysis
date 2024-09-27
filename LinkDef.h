@@ -8,6 +8,8 @@
 #pragma link C++ class vector < Hit> + ;
 
 #pragma link C++ class HistoManagerETROC;
+#pragma link C++ class HistoManagerETROC4Boards;
 #pragma link C++ class BaseHistoManager;
+#pragma link C++ class Correction;
 
 #endif
